@@ -23,13 +23,24 @@ def main():
         print(f'Error: {args.source} does not exist')
         exit()
 
-    if args.operation in ['move', 'copy'] and not os.path.exists(args.destination):
+    if args.operation in ['move', 'copy', 'rename',] and not os.path.exists(args.destination):
         print(f'Error: {args.destination} does not exist')
         exit()
 
-    if args.operation in ['move', 'copy'] and os.path.isdir(args.source) and os.path.isfile(args.destination):
+    if args.operation in ['move', 'copy', 'rename'] and os.path.isdir(args.source) and os.path.isfile(args.destination):
         print(f'Error: Cannot copy/move a directory to a file')
         exit()
+
+    file_type = os.stat(args.src_file).st_mode
+    if os.path.islink(args.src_file):
+        print(f"Error: {args.src_file} is a symbolic link.")
+        return
+    elif os.path.isfifo(args.src_file):
+        print(f"Error: {args.src_file} is a named pipe.")
+        return
+    elif os.path.isblk(file_type) or os.path.ischr(file_type):
+        print(f"Error: {args.src_file} is a device file.")
+        return
 
     if args.operation == 'copy_file':
         file_operations.copy_file(args.source, args.destination)
