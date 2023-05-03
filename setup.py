@@ -9,11 +9,13 @@ parser = argparse.ArgumentParser(
 def main():
     parser = argparse.ArgumentParser(description='Perform file operations.')
     parser.add_argument('operation', choices=[
-                        'copy', 'move', 'delete'], help='The file operation to perform')
+                        'copy_file', 'move_file', 'delete_file', 'copy_dir',
+                        'move_dir', 'delete_dir', 'copy_path, move_path, delete_path'],
+                        help='The file operation to perform')
     parser.add_argument('source', help='The source file or directory')
     parser.add_argument('destination', nargs='?', default='.',
                         help='The destination file or directory')
-    # parser.add_argument('-r', '--recursive', action='store_true', help='Recursively perform the operation')
+
     args = parser.parse_args()
 
     # check if the file exist
@@ -29,12 +31,24 @@ def main():
         print(f'Error: Cannot copy/move a directory to a file')
         exit()
 
-    if args.operation == 'copy':
+    if args.operation == 'copy_file':
         file_operations.copy_file(args.source, args.destination)
-    elif args.operation == 'move':
+    elif args.operation == 'move_file':
         file_operations.move_file(args.source, args.destination)
-    elif args.operation == 'delete':
+    elif args.operation == 'delete_file':
         file_operations.delete_file(args.source)
+    elif args.operation == 'move_dir':
+        file_operations.move_dir(args.source, args.destination)
+    elif args.operation == 'copy_dir':
+        file_operations.copy_dir(args.source, args.destination)
+    elif args.operation == 'delete_dir':
+        file_operations.delete_dir(args.source)
+    elif args.operation == 'move_path':
+        file_operations.recursive_move(args.source, args.destination)
+    elif args.operation == 'copy_path':
+        file_operations.recursive_copy(args.source, args.destination)
+    elif args.operation == 'delete_path':
+        file_operations.recursive_delete(args.source)
 
 
 if __name__ == '__main__':
