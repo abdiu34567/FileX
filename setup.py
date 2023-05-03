@@ -10,7 +10,7 @@ def main():
     parser = argparse.ArgumentParser(description='Perform file operations.')
     parser.add_argument('operation', choices=[
                         'copy_file', 'move_file', 'delete_file', 'copy_dir',
-                        'move_dir', 'delete_dir', 'copy_path, move_path, delete_path'],
+                        'move_dir', 'delete_dir', 'copy_path, move_path, delete_path', 'rename_file', 'create_file'],
                         help='The file operation to perform')
     parser.add_argument('source', help='The source file or directory')
     parser.add_argument('destination', nargs='?', default='.',
@@ -49,6 +49,12 @@ def main():
         file_operations.recursive_copy(args.source, args.destination)
     elif args.operation == 'delete_path':
         file_operations.recursive_delete(args.source)
+
+    elif args.operation == 'rename_file':
+        file_operations.rename_file(args.source, args.destination)
+
+    elif args.operation == 'create_file':
+        file_operations.create_file(args.source)
 
 
 if __name__ == '__main__':

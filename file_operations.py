@@ -83,3 +83,19 @@ def recursive_delete(path):
         for item in os.listdir(path):
             item_path = os.path.join(path, item)
             recursive_delete(item_path)
+
+
+def rename_file(src_file, dest_file):
+    try:
+        os.rename(src_file, dest_file)
+        print(f"Renamed {src_file} to {dest_file}")
+    except OSError as e:
+        print(f"Error renaming file: {e}")
+
+
+def create_file(file_path):
+    try:
+        open(file_path, 'w').close()
+        print(f"Created {file_path}")
+    except OSError as e:
+        print(f"Error creating file: {e}")
