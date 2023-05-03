@@ -1,27 +1,30 @@
 import shutil
 import os
 
-def copy_file(source, destination, recursive=False):
 
-    directory = os.path.dirname(destination)
-    
-    # If the directory does not exist, create it
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+def copy_file(source, destination):
+    try:
+        shutil.copy(source, destination)
+        print(f'{source} copied to {destination}')
+    except Exception as e:
+        print(f'Error: {e}')
 
-    if recursive:
-        shutil.copytree(source, os.path.join(destination, os.path.basename(source)))
-    else:
-        shutil.copy2(source, destination)
 
-def move_file(source, destination, recursive=False):
-    if recursive:
-        shutil.move(source, os.path.join(destination, os.path.basename(source)))
-    else:
+def move_file(source, destination):
+    try:
         shutil.move(source, destination)
+        print(f'{source} moved to {destination}')
+    except Exception as e:
+            print(f'Error: {e}')
+            
 
-def delete_file(source, recursive=False):
-    if recursive:
-        shutil.rmtree(source)
-    else:
-        os.remove(source)
+def delete_file(source):
+    try:
+        if os.path.isdir(source):
+            shutil.rmtree(source)
+            print(f'{source} directory deleted')
+        else:
+            os.remove(source)
+            print(f'{source} file deleted')
+    except Exception as e:
+                print(f'Error: {e}')
