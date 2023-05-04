@@ -34,13 +34,13 @@ def main():
     file_type = os.stat(args.src_file).st_mode
     if os.path.islink(args.src_file):
         print(f"Error: {args.src_file} is a symbolic link.")
-        return
+        exit()
     elif os.path.isfifo(args.src_file):
         print(f"Error: {args.src_file} is a named pipe.")
-        return
+        exit()
     elif os.path.isblk(file_type) or os.path.ischr(file_type):
         print(f"Error: {args.src_file} is a device file.")
-        return
+        exit()
 
     if args.operation == 'copy_file':
         file_operations.copy_file(args.source, args.destination)
