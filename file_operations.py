@@ -2,42 +2,51 @@ import shutil
 import os
 
 
-def copy_file(source, destination):
+def copy_file(source, dest_dir):
     try:
-        shutil.copy(source, destination)
-        print(f'{source} copied to {destination}')
+        for file in source:
+            dest_file_path = os.path.join(dest_dir, os.path.basename(file))
+            shutil.copy(file, dest_file_path)
+            print(f'{source} copied to {dest_dir}')
     except Exception as e:
         print(f'Error: {e}')
 
 
-def move_file(source, destination):
+def move_file(source, dest_dir):
     try:
-        shutil.move(source, destination)
-        print(f'{source} moved to {destination}')
+        for file in source:
+            dest_file_path = os.path.join(dest_dir, os.path.basename(file))
+            shutil.move(file, dest_file_path)
+            print(f'{source} moved to {dest_dir}')
     except Exception as e:
         print(f'Error: {e}')
 
 
 def delete_file(source):
     try:
-        os.remove(source)
-        print(f'{source} file deleted')
+        for file in source:
+            os.remove(file)
+            print(f'{file} file deleted')
     except Exception as e:
         print(f'Error: {e}')
 
 
 def move_dir(src_dir, dest_dir):
     try:
-        shutil.move(src_dir, dest_dir)
-        print(f"Moved {src_dir} to {dest_dir}")
+        for file in src_dir:
+            dest_file_path = os.path.join(dest_dir, os.path.basename(file))
+            shutil.move(file, dest_file_path)
+            print(f"Moved {file} to {dest_dir}")
     except (shutil.Error, OSError) as e:
         print(f"Error moving directory: {e}")
 
 
 def copy_dir(src_dir, dest_dir):
     try:
-        shutil.copytree(src_dir, dest_dir)
-        print(f"Copied {src_dir} to {dest_dir}")
+        for file in src_dir:
+            dest_file_path = os.path.join(dest_dir, os.path.basename(file))
+            shutil.copytree(file, dest_file_path)
+            print(f"Copied {file} to {dest_dir}")
     except (shutil.Error, OSError) as e:
         print(f"Error copying directory: {e}")
 
